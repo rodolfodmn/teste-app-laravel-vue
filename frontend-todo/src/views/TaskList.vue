@@ -1,26 +1,40 @@
 <template>
-  <div>
-    <form @submit.prevent="addTask">
-      <input v-model="title" placeholder="Título" required />
-      <input v-model="description" placeholder="Descrição" />
-      <button type="submit">Adicionar</button>
+  <div class="container">
+    <form @submit.prevent="addTask" class="form">
+      <h2 class="title">Nova Tarefa</h2>
+      <input
+        v-model="title"
+        type="text"
+        placeholder="Título"
+        required
+        class="input"
+      />
+      <input
+        v-model="description"
+        type="text"
+        placeholder="Descrição"
+        class="input"
+      />
+      <button type="submit" class="button">Adicionar</button>
     </form>
 
-    <div>
+    <div class="filter">
       <label>Status:</label>
-      <select v-model="statusFilter">
+      <select v-model="statusFilter" @change="fetchTasks" class="select">
         <option value="">Todos</option>
         <option value="pending">Pendentes</option>
         <option value="done">Concluídas</option>
       </select>
     </div>
 
-    <TaskCard
-      v-for="task in filteredTasks"
-      :key="task.id"
-      :task="task"
-      @mark-done="markAsDone"
-    />
+    <div class="task-list">
+      <TaskCard
+        v-for="task in filteredTasks"
+        :key="task.id"
+        :task="task"
+        @mark-done="markAsDone"
+      />
+    </div>
   </div>
 </template>
 
@@ -61,3 +75,4 @@ const filteredTasks = computed(() => tasks.value)
 
 onMounted(fetchTasks)
 </script>
+
